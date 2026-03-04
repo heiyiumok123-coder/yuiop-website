@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BACON GUILD | 核心終端</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <title>BACON GUILD | 終極控制端</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+TC:wght@300;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --p: #bc13fe; /* 霓虹紫 */
-            --bg: #050505;
-            --card-bg: rgba(20, 20, 25, 0.7);
+            --p: #bc13fe; 
+            --p-glow: rgba(188, 19, 254, 0.6);
+            --bg: #020202;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,203 +18,230 @@
             color: #fff;
             font-family: 'Noto Sans TC', sans-serif;
             overflow-x: hidden;
+            cursor: default;
         }
 
-        /* 粒子背景背景特效 */
-        #canvas-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1a0b2e 0%, #050505 100%);
+        /* 背景粒子流光 */
+        #hero-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a052e 0%, #000 100%);
         }
 
-        /* 頂部 Hero */
+        /* 頂級 Hero 標題區 */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            z-index: 1;
+            perspective: 1000px;
         }
 
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 12vw, 7rem);
-            letter-spacing: 20px;
-            background: linear-gradient(to bottom, #fff, var(--p));
+            font-size: 12vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 30px;
+            background: linear-gradient(to bottom, #fff 30%, var(--p));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(188, 19, 254, 0.5));
-            margin-bottom: 20px;
+            filter: drop-shadow(0 0 50px var(--p-glow));
+            animation: titlePulse 4s ease-in-out infinite;
         }
 
-        /* 中間加入按鈕優化 */
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px var(--p-glow)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 70px var(--p)); }
+        }
+
+        /* 加入伺服器大按鈕 */
         .join-btn {
-            padding: 20px 60px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            margin-top: 40px;
+            padding: 25px 80px;
+            font-family: 'Orbitron';
+            font-size: 1.8rem;
             color: #fff;
             text-decoration: none;
-            border: 1px solid var(--p);
-            background: rgba(188, 19, 254, 0.05);
+            border: 2px solid var(--p);
+            background: rgba(188, 19, 254, 0.1);
             backdrop-filter: blur(10px);
-            transition: 0.5s;
-            position: relative;
-            overflow: hidden;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.5s ease;
+            box-shadow: 0 0 30px var(--p-glow);
         }
         .join-btn:hover {
             background: var(--p);
-            box-shadow: 0 0 50px var(--p);
-            transform: translateY(-5px);
+            box-shadow: 0 0 80px var(--p);
+            transform: translateY(-10px) scale(1.05);
+            color: #000;
         }
 
-        /* 介紹區域 */
-        .section-title {
-            text-align: center;
-            font-family: 'Orbitron';
-            font-size: 2.5rem;
-            margin: 100px 0 50px;
-            color: var(--p);
-        }
-
-        .container {
-            max-width: 1100px;
+        /* 介紹容器 */
+        .content-wrap {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px 150px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            padding: 150px 40px;
         }
 
-        /* 玻璃擬態卡片 */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(188, 19, 254, 0.2);
-            padding: 40px;
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
-            transition: 0.4s;
-            position: relative;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
         }
+
+        /* 3D 效果卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(188, 19, 254, 0.2);
+            padding: 60px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            transition: 0.3s ease;
+            overflow: hidden;
+        }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(188, 19, 254, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .card:hover::before { left: 100%; }
         .card:hover {
             border-color: var(--p);
-            transform: scale(1.02);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: translateY(-20px) rotateX(5deg);
+            background: rgba(188, 19, 254, 0.05);
         }
 
-        .card h3 { font-family: 'Orbitron'; color: var(--p); margin-bottom: 15px; }
-        .card p { color: #aaa; line-height: 1.6; font-size: 0.95rem; }
+        .card h3 { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--p); margin-bottom: 25px; }
+        .card p { font-size: 1.1rem; color: #ccc; line-height: 2; }
 
-        /* 隱藏入口提示 */
-        .secret-trigger {
-            margin-top: 20px;
-            font-size: 0.7rem;
-            color: #444;
+        /* 特效解鎖按鈕 */
+        .unlock-trigger {
+            margin-top: 30px;
             cursor: pointer;
-            display: inline-block;
+            font-family: 'Orbitron';
+            color: #555;
+            letter-spacing: 3px;
             transition: 0.3s;
         }
-        .secret-trigger:hover { color: var(--p); }
+        .unlock-trigger:hover { color: var(--p); text-shadow: 0 0 10px var(--p); }
 
-        /* 三環動畫 */
-        .admin-ring {
-            position: fixed; bottom: 40px; right: 40px;
-            width: 70px; height: 70px;
-            display: none; cursor: pointer; z-index: 100;
+        /* 🌀 旗艦版三環 */
+        .admin-ring-wrap {
+            position: fixed; bottom: 50px; right: 50px;
+            width: 100px; height: 100px;
+            display: none; cursor: pointer; z-index: 1000;
         }
         .ring {
             position: absolute; width: 100%; height: 100%;
-            border: 2px solid var(--p); border-radius: 50%;
-            border-top-color: transparent; border-bottom-color: transparent;
-            animation: rotate 3s linear infinite;
+            border: 3px solid var(--p); border-radius: 50%;
+            border-right-color: transparent; border-left-color: transparent;
+            animation: ringRot 4s linear infinite;
         }
-        .ring-2 { transform: scale(0.7); animation-duration: 2s; animation-direction: reverse; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .ring-inner { transform: scale(0.6); animation-duration: 2s; animation-direction: reverse; border-top-color: transparent; }
+        .ring-mid { transform: scale(0.8); animation-duration: 3s; opacity: 0.5; }
 
-        /* 管理員側邊欄 */
-        .admin-panel {
-            position: fixed; top: 0; right: -400px; width: 350px; height: 100vh;
-            background: rgba(0, 0, 0, 0.95); border-left: 2px solid var(--p);
-            padding: 50px 30px; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 99;
+        @keyframes ringRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 管理終端面板 */
+        .panel {
+            position: fixed; top: 0; right: -500px; width: 450px; height: 100vh;
+            background: rgba(5, 5, 8, 0.98); border-left: 3px solid var(--p);
+            padding: 80px 40px; transition: 0.7s cubic-bezier(0.85, 0, 0.15, 1);
+            z-index: 999; box-shadow: -20px 0 100px rgba(0,0,0,0.9);
         }
-        .admin-panel.open { right: 0; }
-        .input-group { margin-bottom: 20px; }
+        .panel.open { right: 0; }
+
+        .inp-group { margin-bottom: 30px; }
+        .inp-group label { display: block; font-family: 'Orbitron'; font-size: 0.8rem; color: var(--p); margin-bottom: 10px; }
         input {
-            width: 100%; padding: 12px; background: #111; border: 1px solid #333;
-            color: #fff; border-radius: 5px; outline: none;
+            width: 100%; padding: 15px; background: #000; border: 1px solid #333;
+            color: #fff; font-size: 1rem; outline: none; border-radius: 5px;
         }
-        input:focus { border-color: var(--p); }
-        .login-btn {
-            width: 100%; padding: 15px; background: var(--p); border: none;
-            color: #000; font-family: 'Orbitron'; font-weight: bold; cursor: pointer;
+        input:focus { border-color: var(--p); box-shadow: 0 0 15px var(--p-glow); }
+
+        .exec-btn {
+            width: 100%; padding: 20px; background: var(--p); border: none;
+            font-family: 'Orbitron'; font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
         }
+        .exec-btn:hover { letter-spacing: 5px; box-shadow: 0 0 30px var(--p); }
+
     </style>
 </head>
 <body>
 
-    <div id="canvas-bg"></div>
+    <div id="hero-bg"></div>
 
     <section class="hero">
         <h1>BACON</h1>
-        <a href="https://discord.gg/rvGCY3mjd" class="join-btn">ENTER SERVER</a>
+        <a href="https://discord.gg/rvGCY3mjd" class="join-btn">JOIN THE GUILD</a>
     </section>
 
-    <h2 class="section-title">SYSTEM SPECS</h2>
-
-    <div class="container">
-        <div class="card">
-            <h3>🤖 BACON BOT</h3>
-            <p>全自動化 DM 系統。配備多重驗證機制，確保伺服器成員身分安全與訊息精準送達。</p>
-            <span class="secret-trigger" onclick="showRing()">[ 權限加載 ]</span>
-        </div>
-        <div class="card">
-            <h3>🛡️ FIREWALL</h3>
-            <p>24/7 持續監控。攔截所有潛在的垃圾郵件與帳號威脅，維持社群的高品質交流環境。</p>
-        </div>
-        <div class="card">
-            <h3>⚡ PERFORMANCE</h3>
-            <p>採用 Zeabur 極速引擎。保證機器人 99.9% 在線率，指令響應時間低於 100ms。</p>
-        </div>
-    </div>
-
-    <div id="adminRing" class="admin-ring" onclick="document.getElementById('adminPanel').classList.toggle('open')">
-        <div class="ring"></div>
-        <div class="ring ring-2"></div>
-    </div>
-
-    <div class="admin-panel" id="adminPanel">
-        <div id="loginSection">
-            <h3 style="font-family:'Orbitron'; color:var(--p); margin-bottom:30px;">ADMIN AUTH</h3>
-            <div class="input-group"><input type="text" id="user" placeholder="ACCOUNT"></div>
-            <div class="input-group"><input type="password" id="pass" placeholder="PASSWORD"></div>
-            <button class="login-btn" onclick="checkAuth()">SIGN IN</button>
-        </div>
-        <div id="controlSection" style="display: none;">
-            <h3 style="font-family:'Orbitron'; color:#ff4d4d; margin-bottom:30px;">TERMINAL</h3>
-            <div class="input-group">
-                <label style="font-size: 0.7rem; color: #666;">USER ID</label>
-                <input type="text" placeholder="123456789...">
+    <div class="content-wrap">
+        <div class="grid">
+            <div class="card">
+                <h3>CORE BOT</h3>
+                <p>搭載培根軍團自主開發的 DM 管理協議。支援毫秒級反應速度與多維度身分驗證，為您的社群建立最強防線。</p>
+                <div class="unlock-trigger" onclick="unlockAdmin()">[ ACCESS COMMANDER ]</div>
             </div>
-            <button class="login-btn" style="background:#ff4d4d">BAN USER</button>
-            <p style="margin-top: 20px; font-size: 0.8rem; color: #888; text-align: center;">手動模式：請生成指令後回 Discord 執行</p>
+            <div class="card">
+                <h3>SECURE OPS</h3>
+                <p>全天候 24/7 自動巡邏，搭載智能 ID 過濾器與惡意行為偵測，讓騷擾與廣告無處遁形。</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminRing" class="admin-ring-wrap" onclick="document.getElementById('panel').classList.toggle('open')">
+        <div class="ring"></div>
+        <div class="ring ring-mid"></div>
+        <div class="ring ring-inner"></div>
+    </div>
+
+    <div class="panel" id="panel">
+        <div id="authBox">
+            <h2 style="font-family:'Orbitron'; font-size:2.5rem; margin-bottom:40px;">AUTHENTICATION</h2>
+            <div class="inp-group">
+                <label>ADMIN ACCOUNT</label>
+                <input type="text" id="user" placeholder="Enter ID...">
+            </div>
+            <div class="inp-group">
+                <label>ACCESS KEY</label>
+                <input type="password" id="pass" placeholder="••••••••">
+            </div>
+            <button class="exec-btn" onclick="doLogin()">VERIFY IDENTITY</button>
+        </div>
+
+        <div id="cmdBox" style="display:none;">
+            <h2 style="font-family:'Orbitron'; font-size:2.5rem; color:#ff4d4d; margin-bottom:40px;">COMMANDER</h2>
+            <div class="inp-group">
+                <label>TARGET SNOWFLAKE ID</label>
+                <input type="text" id="targetId" placeholder="User ID to ban...">
+            </div>
+            <button class="exec-btn" style="background:#ff4d4d;" onclick="alert('指令已傳輸：/blacklist add id:'+document.getElementById('targetId').value)">EXECUTE BLACKLIST</button>
+            <p style="margin-top:40px; color:#555; font-size:0.8rem; text-align:center;">此終端已與 Discord 機器人安全連結</p>
         </div>
     </div>
 
     <script>
-        function showRing() {
+        // 啟動三環
+        function unlockAdmin() {
             document.getElementById('adminRing').style.display = 'block';
+            // 簡單的視覺回饋
+            document.querySelector('.unlock-trigger').innerText = "[ MODULE ACTIVATED ]";
+            document.querySelector('.unlock-trigger').style.color = "#00ff00";
         }
 
-        function checkAuth() {
+        // 登入邏輯
+        function doLogin() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
             if(u === "mok123" && p === "er398398") {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('controlSection').style.display = 'block';
+                document.getElementById('authBox').style.display = 'none';
+                document.getElementById('cmdBox').style.display = 'block';
+            } else {
+                alert("ACCESS DENIED: INVALID KEY");
             }
         }
     </script>
