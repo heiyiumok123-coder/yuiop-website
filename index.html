@@ -14,25 +14,114 @@
             background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f0f2e 100%);  
             color: #e0e0e0;  
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
-            overflow-x: hidden;  
             min-height: 100vh;  
+            overflow-x: hidden;  
         }  
-        /* 背景動畫 */  
-        @keyframes float {  
-            0%, 100% { transform: translateY(0px); }  
-            50% { transform: translateY(-20px); }  
+        .container {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            padding: 20px;  
         }  
-        /* 霓虹光效 */  
-        @keyframes neon-glow {  
-            0%, 100% { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88; }  
-            50% { text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88, 0 0 40px #00ff88; }  
+        header {  
+            text-align: center;  
+            padding: 60px 20px;  
+            animation: fadeInDown 1s ease-out;  
         }  
-        @keyframes neon-box {  
-            0%, 100% { box-shadow: 0 0 10px #00ff88, inset 0 0 10px rgba(0, 255, 136, 0.1); }  
-            50% { box-shadow: 0 0 20px #00ff88, inset 0 0 20px rgba(0, 255, 136, 0.2); }  
+        h1 {  
+            font-size: 4em;  
+            background: linear-gradient(45deg, #a020f0, #7c3aed, #a020f0);  
+            -webkit-background-clip: text;  
+            -webkit-text-fill-color: transparent;  
+            background-clip: text;  
+            text-shadow: 0 0 30px rgba(160, 32, 240, 0.5);  
+            margin-bottom: 10px;  
+            font-weight: 900;  
+            letter-spacing: 3px;  
         }  
-        /* 滾動動畫 */  
-        @keyframes slide-in {  
+        .subtitle {  
+            font-size: 1.3em;  
+            color: #a020f0;  
+            text-shadow: 0 0 10px rgba(160, 32, 240, 0.3);  
+            margin-bottom: 30px;  
+        }  
+        .features {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+            gap: 20px;  
+            margin: 40px 0;  
+            animation: fadeInUp 1s ease-out 0.2s both;  
+        }  
+        .feature-card {  
+            background: rgba(160, 32, 240, 0.05);  
+            border: 2px solid #a020f0;  
+            border-radius: 10px;  
+            padding: 20px;  
+            text-align: center;  
+            transition: all 0.3s ease;  
+            box-shadow: 0 0 20px rgba(160, 32, 240, 0.1);  
+        }  
+        .feature-card:hover {  
+            transform: translateY(-10px);  
+            box-shadow: 0 0 40px rgba(160, 32, 240, 0.3);  
+            background: rgba(160, 32, 240, 0.1);  
+        }  
+        .feature-card h3 {  
+            color: #a020f0;  
+            margin-bottom: 10px;  
+            font-size: 1.3em;  
+        }  
+        .buttons {  
+            display: flex;  
+            gap: 20px;  
+            justify-content: center;  
+            margin: 40px 0;  
+            flex-wrap: wrap;  
+            animation: fadeInUp 1s ease-out 0.4s both;  
+        }  
+        .btn {  
+            padding: 15px 40px;  
+            font-size: 1.1em;  
+            border: 2px solid #a020f0;  
+            background: linear-gradient(45deg, #a020f0, #7c3aed);  
+            color: white;  
+            border-radius: 50px;  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+            text-decoration: none;  
+            display: inline-block;  
+            font-weight: bold;  
+            text-shadow: 0 0 10px rgba(160, 32, 240, 0.5);  
+            box-shadow: 0 0 20px rgba(160, 32, 240, 0.3);  
+        }  
+        .btn:hover {  
+            transform: scale(1.05);  
+            box-shadow: 0 0 40px rgba(160, 32, 240, 0.6);  
+            background: linear-gradient(45deg, #7c3aed, #a020f0);  
+        }  
+        .btn:active {  
+            transform: scale(0.98);  
+        }  
+        .btn-discord {  
+            background: linear-gradient(45deg, #5865F2, #4752C4);  
+            border-color: #5865F2;  
+            text-shadow: 0 0 10px rgba(88, 101, 242, 0.5);  
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);  
+        }  
+        .btn-discord:hover {  
+            box-shadow: 0 0 40px rgba(88, 101, 242, 0.6);  
+            background: linear-gradient(45deg, #4752C4, #5865F2);  
+        }  
+        @keyframes fadeInDown {  
+            from {  
+                opacity: 0;  
+                transform: translateY(-30px);  
+            }  
+            to {  
+                opacity: 1;  
+                transform: translateY(0);  
+            }  
+        }  
+        @keyframes fadeInUp {  
             from {  
                 opacity: 0;  
                 transform: translateY(30px);  
@@ -42,175 +131,73 @@
                 transform: translateY(0);  
             }  
         }  
-        header {  
+        @keyframes scroll {  
+            0%, 100% {  
+                transform: translateY(0);  
+            }  
+            50% {  
+                transform: translateY(-20px);  
+            }  
+        }  
+        .scroll-indicator {  
             text-align: center;  
-            padding: 60px 20px 40px;  
-            animation: slide-in 0.8s ease-out;  
-        }  
-        h1 {  
-            font-size: 4rem;  
-            font-weight: 900;  
-            background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff);  
-            -webkit-background-clip: text;  
-            -webkit-text-fill-color: transparent;  
-            background-clip: text;  
-            animation: neon-glow 2s ease-in-out infinite;  
-            margin-bottom: 10px;  
-            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);  
-        }  
-        .subtitle {  
-            font-size: 1.2rem;  
-            color: #00ff88;  
-            margin-bottom: 30px;  
-            animation: neon-glow 2.5s ease-in-out infinite;  
-        }  
-        .container {  
-            max-width: 1200px;  
-            margin: 0 auto;  
-            padding: 0 20px;  
-        }  
-        .features {  
-            display: grid;  
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  
-            gap: 30px;  
-            margin: 60px 0;  
-        }  
-        .feature-card {  
-            background: rgba(0, 255, 136, 0.05);  
-            border: 2px solid #00ff88;  
-            border-radius: 15px;  
-            padding: 30px;  
-            animation: neon-box 2s ease-in-out infinite, slide-in 0.8s ease-out;  
-            transition: transform 0.3s ease, box-shadow 0.3s ease;  
-            cursor: pointer;  
-        }  
-        .feature-card:hover {  
-            transform: translateY(-10px);  
-            box-shadow: 0 0 30px #00ff88, inset 0 0 20px rgba(0, 255, 136, 0.3);  
-        }  
-        .feature-card h3 {  
-            color: #00ff88;  
-            margin-bottom: 15px;  
-            font-size: 1.5rem;  
-        }  
-        .feature-card p {  
-            color: #b0b0b0;  
-            line-height: 1.6;  
-        }  
-        .cta-section {  
-            text-align: center;  
-            padding: 60px 20px;  
-            animation: slide-in 1s ease-out 0.3s both;  
-        }  
-        .invite-btn {  
-            display: inline-block;  
-            padding: 15px 40px;  
-            background: linear-gradient(45deg, #00ff88, #00ccff);  
-            color: #0a0e27;  
-            border: none;  
-            border-radius: 50px;  
-            font-size: 1.1rem;  
-            font-weight: bold;  
-            cursor: pointer;  
-            transition: all 0.3s ease;  
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);  
-            text-decoration: none;  
-            display: inline-block;  
-        }  
-        .invite-btn:hover {  
-            transform: scale(1.05);  
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);  
-        }  
-        .invite-btn:active {  
-            transform: scale(0.98);  
+            margin-top: 40px;  
+            animation: scroll 2s infinite;  
+            color: #a020f0;  
         }  
         footer {  
             text-align: center;  
             padding: 40px 20px;  
             color: #666;  
-            border-top: 1px solid rgba(0, 255, 136, 0.2);  
+            border-top: 1px solid rgba(160, 32, 240, 0.2);  
             margin-top: 60px;  
         }  
-        /* 響應式設計 */  
         @media (max-width: 768px) {  
             h1 {  
-                font-size: 2.5rem;  
+                font-size: 2.5em;  
             }  
             .subtitle {  
-                font-size: 1rem;  
+                font-size: 1em;  
             }  
-            .features {  
-                grid-template-columns: 1fr;  
+            .buttons {  
+                flex-direction: column;  
             }  
-        }  
-        /* 滾動時的動畫 */  
-        .scroll-animate {  
-            opacity: 0;  
-            transform: translateY(30px);  
-        }  
-        .scroll-animate.visible {  
-            animation: slide-in 0.8s ease-out forwards;  
+            .btn {  
+                width: 100%;  
+            }  
         }  
     </style>  
 </head>  
 <body>  
-    <header>  
-        <h1>✨ YUIOP</h1>  
-        <p class="subtitle">你的 Discord 驗證機器人</p>  
-    </header>  
     <div class="container">  
-        <section class="features">  
-            <div class="feature-card scroll-animate">  
-                <h3>🔐 私信轟炸</h3>  
-                <p>一秒48條信息 讓你崩潰。</p>  
+        <header>  
+            <h1>YUIOP</h1>  
+            <p class="subtitle">✨ dm轟炸機器人 ✨</p>  
+        </header>  
+        <div class="features">  
+            <div class="feature-card">  
+                <h3>⚡ 快速</h3>  
+                <p>機器人發送</p>  
             </div>  
-            <div class="feature-card scroll-animate">  
-                <h3>⚡ 快速響應</h3>  
-                <p>毫秒級的命令響應速度，提供最佳的用戶體驗。</p>  
+            <div class="feature-card">  
+                <h3>🔒 安全</h3>  
+                <p>不會把你的隱私洩露出去</p>  
             </div>  
-            <div class="feature-card scroll-animate">  
-                <h3>🎨 自定義</h3>  
-                <p>完全可自定義發送消息。</p>  
+            <div class="feature-card">  
+                <h3>🎯 易用</h3>  
+                <p>簡單直觀的命令</p>  
             </div>  
-            <div class="feature-card scroll-animate">  
-                <h3>絕對免費</h3>  
-                <p>我們團隊的機器人是終身免費。</p>  
-            </div>  
-            <div class="feature-card scroll-animate">  
-                <h3>🛡️ 安全可靠</h3>  
-                <p>24/7 穩定運行。</p>  
-            </div>  
-            <div class="feature-card scroll-animate">  
-                <h3>💬 易於使用</h3>  
-                <p>簡單直觀的命令，無需複雜配置即可開始使用。</p>  
-            </div>  
-        </section>  
-        <section class="cta-section">  
-            <h2 style="font-size: 2rem; margin-bottom: 30px; color: #00ff88;">準備好了嗎？</h2>  
-            <a href="https://discord.com/api/oauth2/authorize?client_id=1472535608399495190&permissions=8&scope=bot%20applications.commands" class="invite-btn">  
-                邀請 YUIOP 到你的伺服器  
-            </a>  
-        </section>  
+        </div>  
+        <div class="buttons">  
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1472535608399495190&permissions=8&scope=bot%20applications.commands" class="btn">邀請機器人</a>  
+            <a href="https://discord.gg/rvGCY3mjd" class="btn btn-discord">加入我們的伺服器</a>  
+        </div>  
+        <div class="scroll-indicator">  
+            ↓ 向下滾動 ↓  
+        </div>  
     </div>  
     <footer>  
-        <p>&copy; 2026 YUIOP Bot. All rights reserved.</p>  
+        <p>&copy; 2024 YUIOP Discord Bot. All rights reserved.</p>  
     </footer>  
-    <script>  
-        // 滾動動畫  
-        const observerOptions = {  
-            threshold: 0.1,  
-            rootMargin: '0px 0px -50px 0px'  
-        };  
-        const observer = new IntersectionObserver((entries) => {  
-            entries.forEach(entry => {  
-                if (entry.isIntersecting) {  
-                    entry.target.classList.add('visible');  
-                }  
-            });  
-        }, observerOptions);  
-        document.querySelectorAll('.scroll-animate').forEach(el => {  
-            observer.observe(el);  
-        });  
-    </script>  
 </body>  
 </html>  
