@@ -1,0 +1,216 @@
+<!DOCTYPE html>  
+<html lang="zh-TW">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>YUIOP - Discord Bot</title>  
+    <style>  
+        * {  
+            margin: 0;  
+            padding: 0;  
+            box-sizing: border-box;  
+        }  
+        body {  
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f0f2e 100%);  
+            color: #e0e0e0;  
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+            overflow-x: hidden;  
+            min-height: 100vh;  
+        }  
+        /* 背景動畫 */  
+        @keyframes float {  
+            0%, 100% { transform: translateY(0px); }  
+            50% { transform: translateY(-20px); }  
+        }  
+        /* 霓虹光效 */  
+        @keyframes neon-glow {  
+            0%, 100% { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88; }  
+            50% { text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88, 0 0 40px #00ff88; }  
+        }  
+        @keyframes neon-box {  
+            0%, 100% { box-shadow: 0 0 10px #00ff88, inset 0 0 10px rgba(0, 255, 136, 0.1); }  
+            50% { box-shadow: 0 0 20px #00ff88, inset 0 0 20px rgba(0, 255, 136, 0.2); }  
+        }  
+        /* 滾動動畫 */  
+        @keyframes slide-in {  
+            from {  
+                opacity: 0;  
+                transform: translateY(30px);  
+            }  
+            to {  
+                opacity: 1;  
+                transform: translateY(0);  
+            }  
+        }  
+        header {  
+            text-align: center;  
+            padding: 60px 20px 40px;  
+            animation: slide-in 0.8s ease-out;  
+        }  
+        h1 {  
+            font-size: 4rem;  
+            font-weight: 900;  
+            background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff);  
+            -webkit-background-clip: text;  
+            -webkit-text-fill-color: transparent;  
+            background-clip: text;  
+            animation: neon-glow 2s ease-in-out infinite;  
+            margin-bottom: 10px;  
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);  
+        }  
+        .subtitle {  
+            font-size: 1.2rem;  
+            color: #00ff88;  
+            margin-bottom: 30px;  
+            animation: neon-glow 2.5s ease-in-out infinite;  
+        }  
+        .container {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            padding: 0 20px;  
+        }  
+        .features {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  
+            gap: 30px;  
+            margin: 60px 0;  
+        }  
+        .feature-card {  
+            background: rgba(0, 255, 136, 0.05);  
+            border: 2px solid #00ff88;  
+            border-radius: 15px;  
+            padding: 30px;  
+            animation: neon-box 2s ease-in-out infinite, slide-in 0.8s ease-out;  
+            transition: transform 0.3s ease, box-shadow 0.3s ease;  
+            cursor: pointer;  
+        }  
+        .feature-card:hover {  
+            transform: translateY(-10px);  
+            box-shadow: 0 0 30px #00ff88, inset 0 0 20px rgba(0, 255, 136, 0.3);  
+        }  
+        .feature-card h3 {  
+            color: #00ff88;  
+            margin-bottom: 15px;  
+            font-size: 1.5rem;  
+        }  
+        .feature-card p {  
+            color: #b0b0b0;  
+            line-height: 1.6;  
+        }  
+        .cta-section {  
+            text-align: center;  
+            padding: 60px 20px;  
+            animation: slide-in 1s ease-out 0.3s both;  
+        }  
+        .invite-btn {  
+            display: inline-block;  
+            padding: 15px 40px;  
+            background: linear-gradient(45deg, #00ff88, #00ccff);  
+            color: #0a0e27;  
+            border: none;  
+            border-radius: 50px;  
+            font-size: 1.1rem;  
+            font-weight: bold;  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);  
+            text-decoration: none;  
+            display: inline-block;  
+        }  
+        .invite-btn:hover {  
+            transform: scale(1.05);  
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);  
+        }  
+        .invite-btn:active {  
+            transform: scale(0.98);  
+        }  
+        footer {  
+            text-align: center;  
+            padding: 40px 20px;  
+            color: #666;  
+            border-top: 1px solid rgba(0, 255, 136, 0.2);  
+            margin-top: 60px;  
+        }  
+        /* 響應式設計 */  
+        @media (max-width: 768px) {  
+            h1 {  
+                font-size: 2.5rem;  
+            }  
+            .subtitle {  
+                font-size: 1rem;  
+            }  
+            .features {  
+                grid-template-columns: 1fr;  
+            }  
+        }  
+        /* 滾動時的動畫 */  
+        .scroll-animate {  
+            opacity: 0;  
+            transform: translateY(30px);  
+        }  
+        .scroll-animate.visible {  
+            animation: slide-in 0.8s ease-out forwards;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <header>  
+        <h1>✨ YUIOP</h1>  
+        <p class="subtitle">你的 Discord 驗證機器人</p>  
+    </header>  
+    <div class="container">  
+        <section class="features">  
+            <div class="feature-card scroll-animate">  
+                <h3>🔐 自動驗證</h3>  
+                <p>智能驗證系統，自動為新成員分配角色，保護你的伺服器安全。</p>  
+            </div>  
+            <div class="feature-card scroll-animate">  
+                <h3>⚡ 快速響應</h3>  
+                <p>毫秒級的命令響應速度，提供最佳的用戶體驗。</p>  
+            </div>  
+            <div class="feature-card scroll-animate">  
+                <h3>🎨 自定義</h3>  
+                <p>完全可自定義的驗證消息和角色分配邏輯。</p>  
+            </div>  
+            <div class="feature-card scroll-animate">  
+                <h3>📊 統計數據</h3>  
+                <p>實時追蹤驗證統計，了解伺服器成長情況。</p>  
+            </div>  
+            <div class="feature-card scroll-animate">  
+                <h3>🛡️ 安全可靠</h3>  
+                <p>24/7 穩定運行，確保你的伺服器始終受到保護。</p>  
+            </div>  
+            <div class="feature-card scroll-animate">  
+                <h3>💬 易於使用</h3>  
+                <p>簡單直觀的命令，無需複雜配置即可開始使用。</p>  
+            </div>  
+        </section>  
+        <section class="cta-section">  
+            <h2 style="font-size: 2rem; margin-bottom: 30px; color: #00ff88;">準備好了嗎？</h2>  
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1472535608399495190&permissions=8&scope=bot%20applications.commands" class="invite-btn">  
+                邀請 YUIOP 到你的伺服器  
+            </a>  
+        </section>  
+    </div>  
+    <footer>  
+        <p>&copy; 2026 YUIOP Bot. All rights reserved.</p>  
+    </footer>  
+    <script>  
+        // 滾動動畫  
+        const observerOptions = {  
+            threshold: 0.1,  
+            rootMargin: '0px 0px -50px 0px'  
+        };  
+        const observer = new IntersectionObserver((entries) => {  
+            entries.forEach(entry => {  
+                if (entry.isIntersecting) {  
+                    entry.target.classList.add('visible');  
+                }  
+            });  
+        }, observerOptions);  
+        document.querySelectorAll('.scroll-animate').forEach(el => {  
+            observer.observe(el);  
+        });  
+    </script>  
+</body>  
+</html>  
