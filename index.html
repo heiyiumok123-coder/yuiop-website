@@ -3,198 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BACON COMMAND | 永續控制端</title>
+    <title>BACON COMMAND | 偉大創始人控制端</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+TC:wght@300;700&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #bc13fe; --p-glow: rgba(188, 19, 254, 0.5); --bg: #000; }
-        
+        :root { --p: #bc13fe; --p-glow: rgba(188, 19, 254, 0.6); --bg: #000; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg); color: #fff; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 背景：動態流光粒子 (CSS 動畫模擬) */
-        .bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: 
-                radial-gradient(circle at 20% 30%, #1a052e 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, #0f0524 0%, transparent 40%);
-            animation: bgShift 10s ease-in-out infinite alternate;
-        }
-        @keyframes bgShift { from { transform: scale(1); } to { transform: scale(1.2); } }
+        /* 全局動態背景 */
+        #bg-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #150226 0%, #000 100%); }
 
-        /* 🏎️ 頂部巨大標題 */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero h1 {
-            font-family: 'Orbitron'; font-size: 12vw; letter-spacing: 20px;
-            background: linear-gradient(to bottom, #fff, var(--p));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px var(--p));
-            transition: 1s;
+        /* --- 創始人榮耀區 --- */
+        .founder-hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle, rgba(188, 19, 254, 0.15) 0%, transparent 70%);
         }
 
-        .join-btn {
-            margin-top: 50px; padding: 25px 80px; font-family: 'Orbitron'; font-size: 1.8rem;
-            color: #fff; text-decoration: none; border: 2px solid var(--p);
-            background: rgba(188, 19, 254, 0.1); backdrop-filter: blur(10px);
-            transition: 0.5s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            box-shadow: 0 0 20px var(--p-glow);
+        .avatar-frame {
+            width: 150px; height: 150px; border-radius: 50%; border: 3px solid var(--p);
+            padding: 5px; box-shadow: 0 0 30px var(--p-glow); margin-bottom: 20px;
+            animation: pulse 2s infinite alternate; position: relative;
         }
-        .join-btn:hover { background: var(--p); box-shadow: 0 0 60px var(--p); color: #000; transform: translateY(-10px); }
-
-        /* 📊 數據統計區 (每次來回都會重新跳動) */
-        .stat-section { display: flex; justify-content: space-around; padding: 100px 0; background: rgba(255,255,255,0.02); }
-        .stat-card { text-align: center; }
-        .stat-card h2 { font-family: 'Orbitron'; font-size: 4rem; color: var(--p); text-shadow: 0 0 20px var(--p); }
-        .stat-card p { letter-spacing: 5px; color: #555; font-size: 0.9rem; }
-
-        /* 📦 介紹方塊 (來回滾動皆有特效) */
-        .container { max-width: 1400px; margin: 0 auto; padding: 100px 20px; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 60px; }
+        /* 這裡可以放你的頭像圖址，暫用預設佔位 */
+        .avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         
-        .card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(188,19,254,0.1);
-            padding: 60px; border-radius: 10px; transition: 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-            opacity: 0; transform: translateY(50px); /* 預設隱藏 */
+        @keyframes pulse { from { transform: scale(1); box-shadow: 0 0 20px var(--p-glow); } to { transform: scale(1.05); box-shadow: 0 0 50px var(--p); } }
+
+        .founder-name { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--p); letter-spacing: 5px; margin-bottom: 10px; }
+        .founder-id { font-family: 'Orbitron'; font-size: 0.8rem; color: #555; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; }
+
+        .hero h1 { font-family: 'Orbitron'; font-size: 10vw; letter-spacing: 20px; background: linear-gradient(to bottom, #fff, var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px var(--p)); margin: 20px 0; }
+
+        .creator-title { font-size: 1.2rem; color: #bbb; max-width: 600px; line-height: 1.8; margin-bottom: 40px; }
+
+        /* --- 內容區塊 --- */
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 40px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
+        
+        .card { 
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(188,19,254,0.1); padding: 50px; 
+            border-radius: 10px; transition: 0.8s; opacity: 0; transform: translateY(50px);
         }
-        /* 當進入視窗時的特效 */
         .card.reveal { opacity: 1; transform: translateY(0); border-color: var(--p); }
 
-        .card h3 { font-family: 'Orbitron'; font-size: 2rem; color: var(--p); margin-bottom: 20px; }
-        .card p { color: #888; line-height: 2; font-size: 1.1rem; }
-        
-        .secret-trigger { margin-top: 30px; display: block; color: #333; cursor: pointer; transition: 0.3s; }
-        .secret-trigger:hover { color: var(--p); }
+        .card h3 { font-family: 'Orbitron'; color: var(--p); font-size: 1.8rem; margin-bottom: 20px; }
+        .card p { color: #888; line-height: 2; }
 
-        /* 🌀 三環管理員入口 */
-        .admin-ring {
-            position: fixed; bottom: 50px; right: 50px; width: 100px; height: 100px;
-            display: none; cursor: pointer; z-index: 1000;
-        }
-        .ring {
-            position: absolute; width: 100%; height: 100%;
-            border: 3px solid var(--p); border-radius: 50%;
-            border-top-color: transparent; border-bottom-color: transparent;
-            animation: rot 3s linear infinite;
-        }
-        .ring-2 { transform: scale(0.7); animation-duration: 2s; animation-direction: reverse; }
+        /* --- 三環與面板 (與之前一致) --- */
+        .admin-ring { position: fixed; bottom: 40px; right: 40px; width: 80px; height: 80px; display: none; cursor: pointer; z-index: 1000; }
+        .r { position: absolute; width: 100%; height: 100%; border: 2px solid var(--p); border-radius: 50%; border-right-color: transparent; animation: rot 3s linear infinite; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 管理面板 */
-        .panel {
-            position: fixed; top: 0; right: -500px; width: 450px; height: 100vh;
-            background: rgba(5,5,8,0.98); border-left: 3px solid var(--p);
-            padding: 80px 40px; transition: 0.6s ease; z-index: 999;
-        }
+        .panel { position: fixed; top: 0; right: -450px; width: 400px; height: 100vh; background: #000; border-left: 2px solid var(--p); padding: 60px 40px; transition: 0.5s; z-index: 999; }
         .panel.open { right: 0; }
-        .inp { width: 100%; padding: 15px; margin-bottom: 20px; background: #000; border: 1px solid #333; color: #fff; font-family: 'Orbitron'; }
+        .join-btn { padding: 15px 40px; border: 1px solid var(--p); color: #fff; text-decoration: none; background: rgba(188,19,254,0.1); font-family: 'Orbitron'; display: inline-block; transition: 0.3s; }
+        .join-btn:hover { background: var(--p); color: #000; box-shadow: 0 0 30px var(--p); }
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
+    <div id="bg-effect"></div>
 
-    <section class="hero">
-        <h1 id="mainTitle">BACON</h1>
+    <section class="founder-hero">
+        <div class="avatar-frame">
+            <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Founder">
+        </div>
+        <div class="founder-name">偉大的創造者</div>
+        <div class="founder-id">UID: 1358119917039128807</div>
+        
+        <section class="hero">
+            <h1>BACON</h1>
+        </section>
+
+        <p class="creator-title">
+            「這不僅是一個機器人，更是一個社群的秩序基石。」<br>
+            由偉大的創造者 1358119917039128807 打造，致力於建立最純粹、最安全的培根軍團通訊網。
+        </p>
+        
         <a href="https://discord.gg/rvGCY3mjd" class="join-btn">JOIN SERVER</a>
     </section>
 
-    <section class="stat-section">
-        <div class="stat-card">
-            <h2 class="counter" data-target="2400">0</h2>
-            <p>MEMBERS</p>
-        </div>
-        <div class="stat-card">
-            <h2 class="counter" data-target="100">0</h2>
-            <p>UPTIME %</p>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="feature-grid">
+    <div class="main-container">
+        <div class="info-grid">
             <div class="card">
-                <h3>VERIFICATION</h3>
-                <p>先進的防護協議。我們不僅驗證用戶，更是在守護每一位培根軍團成員的資產與隱私。</p>
-                <span class="secret-trigger" onclick="unlock()">[ ACCESS KEY ]</span>
+                <h3>CREATION PHILOSOPHY</h3>
+                <p>我們相信自動化是管理的未來。透過這套系統，創造者成功將數千人的管理成本降低至零，實現了真正的 24/7 無人守候防禦機制。</p>
             </div>
             <div class="card">
-                <h3>DM ENGINE</h3>
-                <p>突破限制的通訊核心。毫秒級延遲，支援多執行緒廣播，讓訊息傳遞如同閃電般迅速。</p>
-            </div>
-            <div class="card">
-                <h3>SECURE OPS</h3>
-                <p>全天候 24/7 自動巡邏，搭載智能 ID 過濾器與惡意行為偵測，讓騷擾無處遁形。</p>
-            </div>
-            <div class="card">
-                <h3>CORE LOG</h3>
-                <p>每一條指令、每一次驗證，皆在透明化的日誌系統中運行，確保系統運作絕對精準。</p>
+                <h3>SYSTEM ARCHITECTURE</h3>
+                <p>核心採用最先進的異步通訊技術，確保在軍團快速擴張時，每一條指令都能精準執行，黑名單庫數據同步延遲趨近於零。</p>
+                <div style="margin-top:20px; color:var(--p); font-size:0.75rem; cursor:pointer;" onclick="unlockAdmin()">[ 初始化管理員權限 ]</div>
             </div>
         </div>
     </div>
 
     <div id="adminRing" class="admin-ring" onclick="document.getElementById('panel').classList.toggle('open')">
-        <div class="ring"></div>
-        <div class="ring ring-2"></div>
+        <div class="r"></div>
+        <div class="r" style="transform: scale(0.7); animation-direction: reverse;"></div>
     </div>
 
     <div class="panel" id="panel">
-        <h2 style="font-family:'Orbitron'; margin-bottom:40px;">ADMIN TERMINAL</h2>
-        <input type="text" id="u" class="inp" placeholder="USER ID">
-        <input type="password" id="p" class="inp" placeholder="ACCESS KEY">
-        <button class="join-btn" style="width:100%; padding:15px; font-size:1.2rem;" onclick="login()">SIGN IN</button>
-        
-        <div id="cmd" style="display:none; margin-top:50px;">
-            <h3 style="color:#ff4d4d; font-family:'Orbitron';">BLACK OPS</h3>
-            <input type="text" id="tid" class="inp" placeholder="TARGET SNOWFLAKE ID" style="margin-top:20px;">
-            <button class="join-btn" style="width:100%; border-color:#ff4d4d; color:#ff4d4d;" onclick="alert('指令已複製：/blacklist add id:'+document.getElementById('tid').value)">EXECUTE BAN</button>
+        <h2 style="font-family:'Orbitron'; margin-bottom:30px;">AUTHORITY</h2>
+        <input type="text" id="u" style="width:100%; padding:15px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff;" placeholder="ACCOUNT">
+        <input type="password" id="p" style="width:100%; padding:15px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff;" placeholder="PASSWORD">
+        <button class="join-btn" style="width:100%" onclick="login()">ENTER TERMINAL</button>
+        <div id="cmd" style="display:none; margin-top:40px; color:#ff4d4d;">
+            <h3>FOUNDER COMMANDS</h3>
+            <input type="text" id="tid" style="width:100%; padding:15px; margin-top:20px; background:#000; border:1px solid #ff4d4d; color:#fff;" placeholder="TARGET ID">
+            <button class="join-btn" style="width:100%; margin-top:15px; border-color:#ff4d4d; color:#ff4d4d;" onclick="alert('同步成功')">EXECUTE BAN</button>
         </div>
     </div>
 
     <script>
-        // 🌟 核心：永續特效邏輯 (來回滾動都會觸發)
-        const observerOptions = {
-            threshold: 0.2
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // 進入視窗時
-                    entry.target.classList.add('reveal');
-                    if(entry.target.classList.contains('counter')) startCount(entry.target);
-                } else {
-                    // 離開視窗時，移除特效 (這樣下次進來才會重新動)
-                    entry.target.classList.remove('reveal');
-                    if(entry.target.classList.contains('counter')) entry.target.innerText = "0";
-                }
+        // 來回捲動特效
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if(e.isIntersecting) e.target.classList.add('reveal');
+                else e.target.classList.remove('reveal');
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // 綁定所有卡片與數字
-        document.querySelectorAll('.card, .counter').forEach(el => observer.observe(el));
+        document.querySelectorAll('.card').forEach(c => obs.observe(c));
 
-        // 數字跳動函數
-        function startCount(el) {
-            const target = +el.getAttribute('data-target');
-            let count = 0;
-            const speed = target / 50;
-            const update = () => {
-                if(count < target) {
-                    count += speed;
-                    el.innerText = Math.ceil(count);
-                    setTimeout(update, 20);
-                } else {
-                    el.innerText = target;
-                }
-            };
-            update();
-        }
-
-        function unlock() {
+        function unlockAdmin() {
             document.getElementById('adminRing').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            alert("🔒 已偵測到創始人授權，管理權限已解鎖。");
         }
 
         function login() {
             if(document.getElementById('u').value==="mok123" && document.getElementById('p').value==="er398398") {
+                document.getElementById('authBox')?.style.display='none'; // 容錯
                 document.getElementById('cmd').style.display='block';
             }
         }
