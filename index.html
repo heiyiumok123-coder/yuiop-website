@@ -19,13 +19,11 @@
             color: #ffffff;
             font-family: 'Noto Sans TC', sans-serif;
             overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
         }
 
-        /* 頂部 Hero 區：主打加入伺服器 */
+        /* 頂部 Hero */
         .hero {
             height: 100vh;
             display: flex;
@@ -34,189 +32,150 @@
             align-items: center;
             text-align: center;
             background: radial-gradient(circle, rgba(60, 9, 108, 0.4) 0%, rgba(5, 5, 5, 1) 80%);
-            padding: 20px;
         }
 
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 10vw, 5.5rem);
-            color: #fff;
-            text-shadow: 0 0 20px var(--neon-purple);
-            margin-bottom: 10px;
-            letter-spacing: 10px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #aaa;
-            margin-bottom: 40px;
-            letter-spacing: 3px;
-        }
-
-        .join-btn {
-            padding: 22px 60px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            color: #fff;
-            text-decoration: none;
-            border: 2px solid var(--neon-purple);
-            background: rgba(188, 19, 254, 0.1);
-            transition: 0.4s;
-            box-shadow: 0 0 15px var(--neon-purple);
-            cursor: pointer;
-        }
-
-        .join-btn:hover {
-            background: var(--neon-purple);
-            box-shadow: 0 0 50px var(--neon-purple);
-            transform: scale(1.05);
-        }
-
-        /* 中間標題 */
-        .section-title {
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            margin: 100px 0 50px;
-            color: var(--neon-purple);
-            text-shadow: 0 0 10px var(--neon-purple);
-        }
-
-        /* 介紹區塊 */
+        /* 介紹區域容器 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 100px;
+            padding: 50px 20px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
         }
 
-        /* 浮現方塊 */
+        /* 機器人介紹卡片 */
         .card {
             background: rgba(15, 15, 20, 0.95);
             border: 1px solid var(--deep-purple);
             padding: 40px;
             border-radius: 5px;
-            position: relative;
-            /* 初始狀態：在下方、透明、縮小 */
             opacity: 0;
-            transform: translateY(100px) scale(0.9);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            transform: translateY(50px);
+            transition: all 0.8s ease;
         }
 
-        .card.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        .card.active { opacity: 1; transform: translateY(0); }
 
-        .card:hover {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 30px rgba(188, 19, 254, 0.2);
-            background: rgba(25, 25, 30, 1);
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
+        /* 「更多」按鈕樣式 */
+        .more-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 20px;
+            border: 1px solid var(--neon-purple);
             color: var(--neon-purple);
-            margin-bottom: 20px;
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .card p {
-            color: #ccc;
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-
-        /* 裝飾線 */
-        .line {
-            width: 100px;
-            height: 4px;
-            background: var(--neon-purple);
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px var(--neon-purple);
-        }
-
-        footer {
-            padding: 60px;
-            text-align: center;
-            background: #000;
-            border-top: 1px solid var(--deep-purple);
-            color: #555;
             font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
             font-size: 0.8rem;
+            transition: 0.3s;
+            cursor: pointer;
+            background: transparent;
         }
+
+        .more-btn:hover {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+
+        /* 三環管理員開關 (預設隱藏) */
+        .admin-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            z-index: 9999;
+            display: none; /* 點擊更多後才會顯示 */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring { position: absolute; border: 2px solid var(--neon-purple); border-radius: 50%; animation: rotate 3s linear infinite; }
+        .ring-1 { width: 40px; height: 40px; border-top-color: transparent; }
+        .ring-2 { width: 60px; height: 60px; animation-duration: 2s; border-bottom-color: transparent; }
+        .ring-3 { width: 80px; height: 80px; animation-duration: 4s; border-left-color: transparent; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 管理員面板 */
+        .admin-panel {
+            position: fixed; top: 0; right: -400px; width: 350px; height: 100vh;
+            background: rgba(10, 10, 15, 0.98); border-left: 2px solid var(--neon-purple);
+            z-index: 9998; padding: 40px 25px; transition: 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+        .admin-panel.open { right: 0; }
+
+        .admin-input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--deep-purple); color: #fff; margin-bottom: 15px; font-family: 'Orbitron'; }
+        .admin-btn { width: 100%; padding: 15px; background: transparent; border: 1px solid var(--neon-purple); color: var(--neon-purple); cursor: pointer; font-family: 'Orbitron'; }
+        .admin-btn:hover { background: var(--neon-purple); color: #fff; }
+
+        .hidden-mode { display: none; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <h1>BACON GUILD</h1>
-        <p>歡迎來到培根軍團 - 未來科技與社群的核心</p>
-        <a href="https://discord.gg/rvGCY3mjd" class="join-btn">進入伺服器</a>
+        <h1 style="font-family:'Orbitron'; font-size: 4rem; text-shadow: 0 0 20px var(--neon-purple);">BACON GUILD</h1>
+        <a href="https://discord.gg/rvGCY3mjd" class="more-btn" style="font-size: 1.5rem; padding: 15px 40px;">加入伺服器</a>
     </section>
 
-    <h2 class="section-title">核心功能介紹</h2>
-
     <div class="container">
-        <div class="card">
-            <div class="line"></div>
-            <h3>🌐 技術社群</h3>
-            <p>專為開發者、遊戲愛好者與培根粉絲打造的技術港灣。在這裡，你可以找到志同道合的夥伴，交流最尖端的資訊。</p>
-        </div>
-
-        <div class="card">
-            <div class="line"></div>
-            <h3>🛡️ 無感驗證</h3>
-            <p>伺服器配備全自動化驗證機制，只需點擊一下即可解鎖頻道。保障環境純淨的同時，給予你最流暢的入群體驗。</p>
-        </div>
-
-        <div class="card">
-            <div class="line"></div>
-            <h3>🤖 專屬 DM 機器人</h3>
-            <p>我們的自研 DM 系統支援高效群發與私訊過濾，讓伺服器通知不再混亂，精準傳達每一份重要資訊。</p>
-        </div>
-
-        <div class="card">
-            <div class="line"></div>
-            <h3>📊 實時數據</h3>
-            <p>機器人會自動維護語音頻道看板，即時更新伺服器的人數動態與驗證狀態，讓社群成長一目了然。</p>
-        </div>
-
-        <div class="card">
-            <div class="line"></div>
-            <h3>⚙️ 極限性能</h3>
-            <p>採用 Zeabur 24/7 持續運行技術，機器人永遠在線，隨時響應你的指令，無須擔心斷線困擾。</p>
-        </div>
-
-        <div class="card">
-            <div class="line"></div>
-            <h3>🥓 培根信仰</h3>
-            <p>這裡不只是伺服器，更是一個品牌。加入我們，享受培根軍團獨有的自定義工具與未來更新權限。</p>
+        <div class="card active" id="botCard">
+            <h3 style="font-family:'Orbitron'; color:var(--neon-purple); margin-bottom:15px;">🤖 BACON DM BOT</h3>
+            <p>最強大的私訊管理系統，支援高效群發與安全防護。</p>
+            <button class="more-btn" onclick="showAdminRing()">MORE</button>
         </div>
     </div>
 
-    <footer>
-        COPYRIGHT &copy; 2026 BACON GUILD. ALL RIGHTS RESERVED.
-    </footer>
+    <div class="admin-toggle" id="adminRing" onclick="togglePanel()">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <div id="loginArea">
+            <h2 style="font-family:'Orbitron'; color:var(--neon-purple); text-align:center; margin-bottom:30px;">ADMIN LOGIN</h2>
+            <input type="text" id="user" class="admin-input" placeholder="ACCOUNT">
+            <input type="password" id="pass" class="admin-input" placeholder="PASSWORD">
+            <button class="admin-btn" onclick="doLogin()">VERIFY</button>
+        </div>
+
+        <div id="controlArea" class="hidden-mode">
+            <h2 style="font-family:'Orbitron'; color:#ff4d4d; text-align:center;">CONTROL</h2>
+            <p style="text-align:center; font-size:0.8rem; color:#555; margin-bottom:30px;">Status: Online</p>
+            <input type="text" id="target" class="admin-input" placeholder="USER SNOWFLAKE ID">
+            <button class="admin-btn" style="border-color:#ff4d4d; color:#ff4d4d;" onclick="alert('已加入黑名單')">BLACKLIST ID</button>
+            <button class="admin-btn" style="margin-top:10px; border:none; font-size:0.7rem;" onclick="location.reload()">LOGOUT</button>
+        </div>
+    </div>
 
     <script>
-        // 觸發滾動浮現特效
-        const scrollReveal = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+        // 點擊「更多」後顯示三環
+        function showAdminRing() {
+            document.getElementById('adminRing').style.display = 'flex';
+            alert("⚠️ 系統偵測：管理員權限入口已在右下角開啟。");
+        }
 
-        document.querySelectorAll('.card').forEach(card => {
-            scrollReveal.observe(card);
-        });
+        // 切換面板
+        function togglePanel() {
+            document.getElementById('adminPanel').classList.toggle('open');
+        }
+
+        // 登入驗證
+        function doLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "mok123" && p === "er398398") {
+                document.getElementById('loginArea').classList.add('hidden-mode');
+                document.getElementById('controlArea').classList.remove('hidden-mode');
+            } else {
+                alert("❌ 帳號或密碼錯誤！");
+            }
+        }
     </script>
 </body>
 </html>
