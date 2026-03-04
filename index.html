@@ -1,203 +1,229 @@
-<!DOCTYPE html>  
-<html lang="zh-TW">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>YUIOP - Discord Bot</title>  
-    <style>  
-        * {  
-            margin: 0;  
-            padding: 0;  
-            box-sizing: border-box;  
-        }  
-        body {  
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f0f2e 100%);  
-            color: #e0e0e0;  
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
-            min-height: 100vh;  
-            overflow-x: hidden;  
-        }  
-        .container {  
-            max-width: 1200px;  
-            margin: 0 auto;  
-            padding: 20px;  
-        }  
-        header {  
-            text-align: center;  
-            padding: 60px 20px;  
-            animation: fadeInDown 1s ease-out;  
-        }  
-        h1 {  
-            font-size: 4em;  
-            background: linear-gradient(45deg, #a020f0, #7c3aed, #a020f0);  
-            -webkit-background-clip: text;  
-            -webkit-text-fill-color: transparent;  
-            background-clip: text;  
-            text-shadow: 0 0 30px rgba(160, 32, 240, 0.5);  
-            margin-bottom: 10px;  
-            font-weight: 900;  
-            letter-spacing: 3px;  
-        }  
-        .subtitle {  
-            font-size: 1.3em;  
-            color: #a020f0;  
-            text-shadow: 0 0 10px rgba(160, 32, 240, 0.3);  
-            margin-bottom: 30px;  
-        }  
-        .features {  
-            display: grid;  
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
-            gap: 20px;  
-            margin: 40px 0;  
-            animation: fadeInUp 1s ease-out 0.2s both;  
-        }  
-        .feature-card {  
-            background: rgba(160, 32, 240, 0.05);  
-            border: 2px solid #a020f0;  
-            border-radius: 10px;  
-            padding: 20px;  
-            text-align: center;  
-            transition: all 0.3s ease;  
-            box-shadow: 0 0 20px rgba(160, 32, 240, 0.1);  
-        }  
-        .feature-card:hover {  
-            transform: translateY(-10px);  
-            box-shadow: 0 0 40px rgba(160, 32, 240, 0.3);  
-            background: rgba(160, 32, 240, 0.1);  
-        }  
-        .feature-card h3 {  
-            color: #a020f0;  
-            margin-bottom: 10px;  
-            font-size: 1.3em;  
-        }  
-        .buttons {  
-            display: flex;  
-            gap: 20px;  
-            justify-content: center;  
-            margin: 40px 0;  
-            flex-wrap: wrap;  
-            animation: fadeInUp 1s ease-out 0.4s both;  
-        }  
-        .btn {  
-            padding: 15px 40px;  
-            font-size: 1.1em;  
-            border: 2px solid #a020f0;  
-            background: linear-gradient(45deg, #a020f0, #7c3aed);  
-            color: white;  
-            border-radius: 50px;  
-            cursor: pointer;  
-            transition: all 0.3s ease;  
-            text-decoration: none;  
-            display: inline-block;  
-            font-weight: bold;  
-            text-shadow: 0 0 10px rgba(160, 32, 240, 0.5);  
-            box-shadow: 0 0 20px rgba(160, 32, 240, 0.3);  
-        }  
-        .btn:hover {  
-            transform: scale(1.05);  
-            box-shadow: 0 0 40px rgba(160, 32, 240, 0.6);  
-            background: linear-gradient(45deg, #7c3aed, #a020f0);  
-        }  
-        .btn:active {  
-            transform: scale(0.98);  
-        }  
-        .btn-discord {  
-            background: linear-gradient(45deg, #5865F2, #4752C4);  
-            border-color: #5865F2;  
-            text-shadow: 0 0 10px rgba(88, 101, 242, 0.5);  
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);  
-        }  
-        .btn-discord:hover {  
-            box-shadow: 0 0 40px rgba(88, 101, 242, 0.6);  
-            background: linear-gradient(45deg, #4752C4, #5865F2);  
-        }  
-        @keyframes fadeInDown {  
-            from {  
-                opacity: 0;  
-                transform: translateY(-30px);  
-            }  
-            to {  
-                opacity: 1;  
-                transform: translateY(0);  
-            }  
-        }  
-        @keyframes fadeInUp {  
-            from {  
-                opacity: 0;  
-                transform: translateY(30px);  
-            }  
-            to {  
-                opacity: 1;  
-                transform: translateY(0);  
-            }  
-        }  
-        @keyframes scroll {  
-            0%, 100% {  
-                transform: translateY(0);  
-            }  
-            50% {  
-                transform: translateY(-20px);  
-            }  
-        }  
-        .scroll-indicator {  
-            text-align: center;  
-            margin-top: 40px;  
-            animation: scroll 2s infinite;  
-            color: #a020f0;  
-        }  
-        footer {  
-            text-align: center;  
-            padding: 40px 20px;  
-            color: #666;  
-            border-top: 1px solid rgba(160, 32, 240, 0.2);  
-            margin-top: 60px;  
-        }  
-        @media (max-width: 768px) {  
-            h1 {  
-                font-size: 2.5em;  
-            }  
-            .subtitle {  
-                font-size: 1em;  
-            }  
-            .buttons {  
-                flex-direction: column;  
-            }  
-            .btn {  
-                width: 100%;  
-            }  
-        }  
-    </style>  
-</head>  
-<body>  
-    <div class="container">  
-        <header>  
-            <h1>YUIOP</h1>  
-            <p class="subtitle">✨ dm轟炸機器人 ✨</p>  
-        </header>  
-        <div class="features">  
-            <div class="feature-card">  
-                <h3>⚡ 快速</h3>  
-                <p>機器人發送</p>  
-            </div>  
-            <div class="feature-card">  
-                <h3>🔒 安全</h3>  
-                <p>不會把你的隱私洩露出去</p>  
-            </div>  
-            <div class="feature-card">  
-                <h3>🎯 易用</h3>  
-                <p>簡單直觀的命令</p>  
-            </div>  
-        </div>  
-        <div class="buttons">  
-            <a href="https://discord.com/api/oauth2/authorize?client_id=1472535608399495190&permissions=8&scope=bot%20applications.commands" class="btn">邀請機器人</a>  
-            <a href="https://discord.gg/rvGCY3mjd" class="btn btn-discord">加入我們的伺服器</a>  
-        </div>  
-        <div class="scroll-indicator">  
-            ↓ 向下滾動 ↓  
-        </div>  
-    </div>  
-    <footer>  
-        <p>&copy; 2024 YUIOP Discord Bot. All rights reserved.</p>  
-    </footer>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BACON DM BOT | 專業私訊管理系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #bc13fe;
+            --deep-purple: #3c096c;
+            --dark-bg: #050505;
+            --glass-bg: rgba(20, 20, 25, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            /* 背景科技感網格 */
+            background-image: 
+                linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* 頂部導覽 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, rgba(60, 9, 108, 0.3) 0%, rgba(5, 5, 5, 1) 70%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 30px var(--neon-purple);
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .invite-btn {
+            position: relative;
+            padding: 18px 45px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-purple);
+            text-decoration: none;
+            border: 2px solid var(--neon-purple);
+            overflow: hidden;
+            transition: 0.5s;
+            background: transparent;
+            font-weight: bold;
+        }
+
+        .invite-btn:hover {
+            background: var(--neon-purple);
+            color: #fff;
+            box-shadow: 0 0 50px var(--neon-purple);
+        }
+
+        /* 滾動內容容器 */
+        .content-section {
+            padding: 100px 10%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        /* 浮現方塊特效 */
+        .reveal-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--deep-purple);
+            padding: 40px;
+            border-radius: 10px;
+            position: relative;
+            /* 初始隱藏狀態：位移並透明 */
+            opacity: 0;
+            transform: translateY(80px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal-box.active {
+            opacity: 1;
+            transform: translateY(0);
+            border-left: 5px solid var(--neon-purple);
+        }
+
+        .reveal-box:hover {
+            box-shadow: 0 0 25px rgba(188, 19, 254, 0.2);
+            background: rgba(30, 30, 35, 1);
+        }
+
+        .reveal-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-purple);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .reveal-box p {
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        /* Discord 底部連結 */
+        .footer {
+            padding: 80px 0;
+            text-align: center;
+            border-top: 1px solid var(--deep-purple);
+        }
+
+        .guild-link {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .guild-link:hover {
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        /* 流光特效 */
+        .glow-line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+            position: relative;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>DM SYSTEM</h1>
+        <p>最強大的個人私訊管理與群發工具</p>
+        <a href="https://discord.com/api/oauth2/authorize?client_id=你的ID&permissions=8&scope=bot" class="invite-btn">INVITE BOT</a>
+    </section>
+
+    <div class="content-section">
+        <div class="glow-line"></div>
+        
+        <div class="grid-container">
+            <div class="reveal-box">
+                <h2>⚡ 高效群發</h2>
+                <p>一鍵向伺服器成員發送私訊通知，支援自定義變數與嵌入式訊息 (Embed)，傳達訊息精準到位。</p>
+            </div>
+
+            <div class="reveal-box">
+                <h2>🛡️ 私訊過濾</h2>
+                <p>內建強大黑名單系統，自動過濾騷擾與廣告私訊，保護你的 Discord 收件匣純淨安全。</p>
+            </div>
+
+            <div class="reveal-box">
+                <h2>💬 客服系統</h2>
+                <p>將成員發給機器人的私訊同步至指定頻道，實現「私訊客服」功能，管理員可直接在頻道回覆。</p>
+            </div>
+
+            <div class="reveal-box">
+                <h2>🥓 專屬培根</h2>
+                <p>針對培根軍團伺服器優化，極低延遲，確保每一封私訊都能準確送達目標手中。</p>
+            </div>
+            
+            <div class="reveal-box">
+                <h2>🔒 隱私加密</h2>
+                <p>所有 DM 對話內容經過安全處理，機器人不會儲存任何未經授權的私人數據，隱私至上。</p>
+            </div>
+
+            <div class="reveal-box">
+                <h2>🎨 完全自訂</h2>
+                <p>從機器人頭像到私訊回應文字，皆可根據你的品牌需求進行深度客製化設定。</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p style="margin-bottom: 20px; color: #555;">SUPPORT SERVER</p>
+        <a href="https://discord.gg/rvGCY3mjd" class="guild-link">JOIN DISCORD GUILD</a>
+    </footer>
+
+    <script>
+        // 滾動偵測：當方塊進入視覺範圍時加入 'active' 類別
+        function scrollReveal() {
+            const boxes = document.querySelectorAll('.reveal-box');
+            const triggerBottom = window.innerHeight * 0.8;
+
+            boxes.forEach(box => {
+                const boxTop = box.getBoundingClientRect().top;
+                if (boxTop < triggerBottom) {
+                    box.classList.add('active');
+                } else {
+                    box.classList.remove('active'); // 滾回去時可選擇是否消失
+                }
+            });
+        }
+
+        window.addEventListener('scroll', scrollReveal);
+        // 初始化檢查一次
+        scrollReveal();
+    </script>
+</body>
+</html>
