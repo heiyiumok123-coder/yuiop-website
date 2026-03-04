@@ -3,61 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BACON COMMAND | 偉大創始人控制端</title>
+    <title>BACON COMMAND | Founder 𝑳𝒖𝒎𝒐𝒔</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+TC:wght@300;700&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #bc13fe; --p-glow: rgba(188, 19, 254, 0.6); --bg: #000; }
+        :root { --p: #bc13fe; --p-glow: rgba(188, 19, 254, 0.6); --white: #ffffff; --bg: #000; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--bg); color: #fff; font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; }
 
-        /* 全局動態背景 */
         #bg-effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #150226 0%, #000 100%); }
 
-        /* --- 創始人榮耀區 --- */
+        /* --- 𝑳𝒖𝒎𝒐𝒔 創世區 --- */
         .founder-hero {
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            background: radial-gradient(circle, rgba(188, 19, 254, 0.15) 0%, transparent 70%);
         }
 
-        .avatar-frame {
-            width: 150px; height: 150px; border-radius: 50%; border: 3px solid var(--p);
-            padding: 5px; box-shadow: 0 0 30px var(--p-glow); margin-bottom: 20px;
-            animation: pulse 2s infinite alternate; position: relative;
+        /* 純白神格頭像 */
+        .white-avatar {
+            width: 160px; height: 160px; background: var(--white); border-radius: 50%;
+            box-shadow: 0 0 60px var(--white), 0 0 20px var(--p);
+            margin-bottom: 30px; position: relative;
+            animation: holyGlow 3s infinite alternate;
         }
-        /* 這裡可以放你的頭像圖址，暫用預設佔位 */
-        .avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        
-        @keyframes pulse { from { transform: scale(1); box-shadow: 0 0 20px var(--p-glow); } to { transform: scale(1.05); box-shadow: 0 0 50px var(--p); } }
+        @keyframes holyGlow { from { box-shadow: 0 0 40px var(--white); transform: scale(1); } to { box-shadow: 0 0 80px var(--white), 0 0 30px var(--p); transform: scale(1.05); } }
 
-        .founder-name { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--p); letter-spacing: 5px; margin-bottom: 10px; }
-        .founder-id { font-family: 'Orbitron'; font-size: 0.8rem; color: #555; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; }
+        .founder-name { font-family: 'Orbitron'; font-size: 3rem; color: #fff; letter-spacing: 12px; margin-bottom: 5px; text-shadow: 0 0 20px #fff; }
+        .founder-id { font-family: 'Orbitron'; font-size: 0.9rem; color: var(--p); letter-spacing: 3px; margin-bottom: 40px; }
 
-        .hero h1 { font-family: 'Orbitron'; font-size: 10vw; letter-spacing: 20px; background: linear-gradient(to bottom, #fff, var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px var(--p)); margin: 20px 0; }
+        .hero-title { font-family: 'Orbitron'; font-size: 8vw; letter-spacing: 20px; background: linear-gradient(to bottom, #fff, var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
 
-        .creator-title { font-size: 1.2rem; color: #bbb; max-width: 600px; line-height: 1.8; margin-bottom: 40px; }
-
-        /* --- 內容區塊 --- */
-        .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 40px; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
-        
-        .card { 
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(188,19,254,0.1); padding: 50px; 
-            border-radius: 10px; transition: 0.8s; opacity: 0; transform: translateY(50px);
+        /* --- 深度機器人介紹 --- */
+        .content-section { max-width: 1300px; margin: 0 auto; padding: 100px 20px; }
+        .feature-box { 
+            background: rgba(255,255,255,0.02); border-left: 5px solid var(--p); padding: 60px; 
+            border-radius: 0 20px 20px 0; margin-bottom: 60px;
+            opacity: 0; transform: translateX(-100px); transition: 1s ease;
         }
-        .card.reveal { opacity: 1; transform: translateY(0); border-color: var(--p); }
+        .feature-box.reveal { opacity: 1; transform: translateX(0); }
 
-        .card h3 { font-family: 'Orbitron'; color: var(--p); font-size: 1.8rem; margin-bottom: 20px; }
-        .card p { color: #888; line-height: 2; }
+        .feature-box h3 { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--p); margin-bottom: 25px; }
+        .feature-box p { font-size: 1.1rem; line-height: 2; color: #ccc; }
+        .feature-box ul { margin-top: 20px; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .feature-box li { color: #fff; padding-left: 20px; position: relative; font-size: 0.95rem; }
+        .feature-box li::before { content: "⚡"; position: absolute; left: 0; color: var(--p); }
 
-        /* --- 三環與面板 (與之前一致) --- */
+        /* 三環與面板 */
         .admin-ring { position: fixed; bottom: 40px; right: 40px; width: 80px; height: 80px; display: none; cursor: pointer; z-index: 1000; }
-        .r { position: absolute; width: 100%; height: 100%; border: 2px solid var(--p); border-radius: 50%; border-right-color: transparent; animation: rot 3s linear infinite; }
+        .r { position: absolute; width: 100%; height: 100%; border: 2px solid var(--white); border-radius: 50%; border-right-color: transparent; animation: rot 3s linear infinite; }
         @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .panel { position: fixed; top: 0; right: -450px; width: 400px; height: 100vh; background: #000; border-left: 2px solid var(--p); padding: 60px 40px; transition: 0.5s; z-index: 999; }
         .panel.open { right: 0; }
-        .join-btn { padding: 15px 40px; border: 1px solid var(--p); color: #fff; text-decoration: none; background: rgba(188,19,254,0.1); font-family: 'Orbitron'; display: inline-block; transition: 0.3s; }
-        .join-btn:hover { background: var(--p); color: #000; box-shadow: 0 0 30px var(--p); }
+        .btn { padding: 15px 40px; border: 1px solid #fff; color: #fff; text-decoration: none; background: transparent; font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px #fff; }
     </style>
 </head>
 <body>
@@ -65,74 +62,89 @@
     <div id="bg-effect"></div>
 
     <section class="founder-hero">
-        <div class="avatar-frame">
-            <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Founder">
+        <div class="white-avatar"></div>
+        <div class="founder-name">𝑳𝒖𝒎𝒐𝒔</div>
+        <div class="founder-id">CREATOR ID: 1358119917039128807</div>
+        <h1 class="hero-title">BACON</h1>
+        <p style="color: #888; letter-spacing: 5px;">培根軍團唯一真神：數位秩序的編織者</p>
+        <div style="margin-top: 50px;">
+            <a href="https://discord.gg/rvGCY3mjd" class="btn">進入伺服器</a>
         </div>
-        <div class="founder-name">偉大的創造者</div>
-        <div class="founder-id">UID: 1358119917039128807</div>
-        
-        <section class="hero">
-            <h1>BACON</h1>
-        </section>
-
-        <p class="creator-title">
-            「這不僅是一個機器人，更是一個社群的秩序基石。」<br>
-            由偉大的創造者 1358119917039128807 打造，致力於建立最純粹、最安全的培根軍團通訊網。
-        </p>
-        
-        <a href="https://discord.gg/rvGCY3mjd" class="join-btn">JOIN SERVER</a>
     </section>
 
-    <div class="main-container">
-        <div class="info-grid">
-            <div class="card">
-                <h3>CREATION PHILOSOPHY</h3>
-                <p>我們相信自動化是管理的未來。透過這套系統，創造者成功將數千人的管理成本降低至零，實現了真正的 24/7 無人守候防禦機制。</p>
-            </div>
-            <div class="card">
-                <h3>SYSTEM ARCHITECTURE</h3>
-                <p>核心採用最先進的異步通訊技術，確保在軍團快速擴張時，每一條指令都能精準執行，黑名單庫數據同步延遲趨近於零。</p>
-                <div style="margin-top:20px; color:var(--p); font-size:0.75rem; cursor:pointer;" onclick="unlockAdmin()">[ 初始化管理員權限 ]</div>
-            </div>
+    <section class="content-section">
+        
+        <div class="feature-box">
+            <h3>神盾防禦系統 (Aegis Shield)</h3>
+            <p>由 𝑳𝒖𝒎𝒐𝒔 親自調校的防護協議，這是軍團的第一道，也是最後一道防線。它不只是黑名單，而是對整個伺服器生態的深度掃描。</p>
+            <ul>
+                <li>跨時區異常行為偵測</li>
+                <li>自動化黑名單實時同步</li>
+                <li>惡意帳號指紋辨識</li>
+                <li>管理員權限遠端鎖定</li>
+            </ul>
         </div>
-    </div>
+
+        <div class="feature-box">
+            <h3>心靈傳輸引擎 (Telepath Engine)</h3>
+            <p>這套 DM 機器人系統徹底改變了軍團的溝通方式。透過創新的數據分流技術，它能將創始人的意志在瞬間傳達給每一位成員。</p>
+            <ul>
+                <li>毫秒級高併發私訊處理</li>
+                <li>自定義 Embed 視覺排版</li>
+                <li>自動化身分組引導流程</li>
+                <li>成員互動反饋紀錄</li>
+            </ul>
+        </div>
+
+        <div class="feature-box">
+            <h3>邏輯中樞 (The Matrix)</h3>
+            <p>這是機器人的大腦。它處理著數以萬計的數據交換，確保驗證、管理與日誌系統在極高壓環境下依然保持穩定。</p>
+            <ul>
+                <li>Zeabur 極速雲端架構</li>
+                <li>24/7 永不中斷監控</li>
+                <li>數據自動備份與還原</li>
+                <li>創始人專屬後台通訊</li>
+            </ul>
+            <div style="margin-top:30px; color:var(--p); font-size:0.8rem; cursor:pointer;" onclick="unlock()">[ 解鎖 𝑳𝒖𝒎𝒐𝒔 專屬控制環 ]</div>
+        </div>
+
+    </section>
 
     <div id="adminRing" class="admin-ring" onclick="document.getElementById('panel').classList.toggle('open')">
         <div class="r"></div>
-        <div class="r" style="transform: scale(0.7); animation-direction: reverse;"></div>
+        <div class="r" style="transform: scale(0.7); animation-direction: reverse; border-color: var(--p);"></div>
     </div>
 
     <div class="panel" id="panel">
         <h2 style="font-family:'Orbitron'; margin-bottom:30px;">AUTHORITY</h2>
         <input type="text" id="u" style="width:100%; padding:15px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff;" placeholder="ACCOUNT">
         <input type="password" id="p" style="width:100%; padding:15px; margin-bottom:20px; background:#111; border:1px solid #333; color:#fff;" placeholder="PASSWORD">
-        <button class="join-btn" style="width:100%" onclick="login()">ENTER TERMINAL</button>
+        <button class="btn" style="width:100%" onclick="login()">驗證神格</button>
         <div id="cmd" style="display:none; margin-top:40px; color:#ff4d4d;">
-            <h3>FOUNDER COMMANDS</h3>
-            <input type="text" id="tid" style="width:100%; padding:15px; margin-top:20px; background:#000; border:1px solid #ff4d4d; color:#fff;" placeholder="TARGET ID">
-            <button class="join-btn" style="width:100%; margin-top:15px; border-color:#ff4d4d; color:#ff4d4d;" onclick="alert('同步成功')">EXECUTE BAN</button>
+            <h3>創世指令執行</h3>
+            <input type="text" id="tid" style="width:100%; padding:15px; margin-top:20px; background:#000; border:1px solid #ff4d4d; color:#fff;" placeholder="目標 UID">
+            <button class="btn" style="width:100%; margin-top:15px; border-color:#ff4d4d; color:#ff4d4d;" onclick="alert('同步成功')">執行抹除</button>
         </div>
     </div>
 
     <script>
-        // 來回捲動特效
+        // 永續捲動特效邏輯
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if(e.isIntersecting) e.target.classList.add('reveal');
-                else e.target.classList.remove('reveal');
+                else e.target.classList.remove('reveal'); 
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.card').forEach(c => obs.observe(c));
+        document.querySelectorAll('.feature-box').forEach(b => obs.observe(b));
 
-        function unlockAdmin() {
+        function unlock() {
             document.getElementById('adminRing').style.display = 'block';
-            alert("🔒 已偵測到創始人授權，管理權限已解鎖。");
+            alert("🌟 𝑳𝒖𝒎𝒐𝒔 身份確認。控制環已部署。");
         }
 
         function login() {
             if(document.getElementById('u').value==="mok123" && document.getElementById('p').value==="er398398") {
-                document.getElementById('authBox')?.style.display='none'; // 容錯
                 document.getElementById('cmd').style.display='block';
             }
         }
