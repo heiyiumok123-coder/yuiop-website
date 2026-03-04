@@ -3,227 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BACON DM BOT | 專業私訊管理系統</title>
+    <title>培根軍團 | 官方加入頻道</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-purple: #bc13fe;
             --deep-purple: #3c096c;
             --dark-bg: #050505;
-            --glass-bg: rgba(20, 20, 25, 0.8);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--dark-bg);
             color: #ffffff;
             font-family: 'Noto Sans TC', sans-serif;
             overflow-x: hidden;
-            /* 背景科技感網格 */
             background-image: 
                 linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 40px 40px;
         }
 
-        /* 頂部導覽 */
+        /* 頂部區域 */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, rgba(60, 9, 108, 0.3) 0%, rgba(5, 5, 5, 1) 70%);
             text-align: center;
+            background: radial-gradient(circle, rgba(60, 9, 108, 0.3) 0%, rgba(5, 5, 5, 1) 80%);
         }
 
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 5rem;
-            letter-spacing: 10px;
-            text-transform: uppercase;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            letter-spacing: 8px;
             color: #fff;
-            text-shadow: 0 0 10px var(--neon-purple), 0 0 30px var(--neon-purple);
-            margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--neon-purple);
+            margin-bottom: 20px;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: #888;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-
-        .invite-btn {
-            position: relative;
-            padding: 18px 45px;
+        /* 加入按鈕 */
+        .join-btn {
+            padding: 20px 50px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: var(--neon-purple);
+            font-size: 1.5rem;
+            color: #fff;
             text-decoration: none;
             border: 2px solid var(--neon-purple);
-            overflow: hidden;
-            transition: 0.5s;
-            background: transparent;
-            font-weight: bold;
+            background: rgba(188, 19, 254, 0.1);
+            transition: 0.4s;
+            box-shadow: 0 0 15px var(--neon-purple);
         }
 
-        .invite-btn:hover {
+        .join-btn:hover {
             background: var(--neon-purple);
-            color: #fff;
             box-shadow: 0 0 50px var(--neon-purple);
+            transform: translateY(-5px);
         }
 
-        /* 滾動內容容器 */
-        .content-section {
+        /* 內容區塊 */
+        .section {
             padding: 100px 10%;
-        }
-
-        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 30px;
         }
 
-        /* 浮現方塊特效 */
-        .reveal-box {
-            background: var(--glass-bg);
+        /* 滾動浮現方塊 */
+        .feature-card {
+            background: rgba(20, 20, 25, 0.9);
             border: 1px solid var(--deep-purple);
             padding: 40px;
-            border-radius: 10px;
-            position: relative;
-            /* 初始隱藏狀態：位移並透明 */
+            border-radius: 4px; /* 科技感方正邊角 */
             opacity: 0;
-            transform: translateY(80px);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(100px); /* 初始位置在下方 */
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        .reveal-box.active {
+        .feature-card.active {
             opacity: 1;
             transform: translateY(0);
-            border-left: 5px solid var(--neon-purple);
+            border-left: 6px solid var(--neon-purple);
         }
 
-        .reveal-box:hover {
-            box-shadow: 0 0 25px rgba(188, 19, 254, 0.2);
-            background: rgba(30, 30, 35, 1);
-        }
-
-        .reveal-box h2 {
+        .feature-card h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--neon-purple);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
-        .reveal-box p {
-            line-height: 1.8;
-            color: #ccc;
+        .feature-card p {
+            color: #bbb;
+            line-height: 1.6;
         }
 
-        /* Discord 底部連結 */
         .footer {
-            padding: 80px 0;
+            padding: 50px;
             text-align: center;
-            border-top: 1px solid var(--deep-purple);
-        }
-
-        .guild-link {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-
-        .guild-link:hover {
-            color: var(--neon-purple);
-            text-shadow: 0 0 10px var(--neon-purple);
-        }
-
-        /* 流光特效 */
-        .glow-line {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
-            position: relative;
-            margin-bottom: 50px;
+            color: #444;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <h1>DM SYSTEM</h1>
-        <p>最強大的個人私訊管理與群發工具</p>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=你的ID&permissions=8&scope=bot" class="invite-btn">INVITE BOT</a>
+        <h1>BACON GUILD</h1>
+        <p style="color: #888; margin-bottom: 40px;">歡迎來到培根軍團，開啟你的科技新紀元</p>
+        <a href="https://discord.gg/rvGCY3mjd" class="join-btn">JOIN SERVER</a>
     </section>
 
-    <div class="content-section">
-        <div class="glow-line"></div>
-        
-        <div class="grid-container">
-            <div class="reveal-box">
-                <h2>⚡ 高效群發</h2>
-                <p>一鍵向伺服器成員發送私訊通知，支援自定義變數與嵌入式訊息 (Embed)，傳達訊息精準到位。</p>
-            </div>
+    <div class="section">
+        <div class="feature-card">
+            <h2>💎 專業社群</h2>
+            <p>這裡匯聚了各路技術大佬，無論是機器人開發還是遊戲模組，都能找到同好。</p>
+        </div>
 
-            <div class="reveal-box">
-                <h2>🛡️ 私訊過濾</h2>
-                <p>內建強大黑名單系統，自動過濾騷擾與廣告私訊，保護你的 Discord 收件匣純淨安全。</p>
-            </div>
+        <div class="feature-card">
+            <h2>🛡️ 嚴格驗證</h2>
+            <p>採用獨家自動化驗證系統，確保群組環境純淨，拒絕廣告與騷擾訊息。</p>
+        </div>
 
-            <div class="reveal-box">
-                <h2>💬 客服系統</h2>
-                <p>將成員發給機器人的私訊同步至指定頻道，實現「私訊客服」功能，管理員可直接在頻道回覆。</p>
-            </div>
+        <div class="feature-card">
+            <h2>🚀 24/7 支援</h2>
+            <p>我們的自研機器人全天候運作，隨時為成員提供所需的數據統計與功能支援。</p>
+        </div>
 
-            <div class="reveal-box">
-                <h2>🥓 專屬培根</h2>
-                <p>針對培根軍團伺服器優化，極低延遲，確保每一封私訊都能準確送達目標手中。</p>
-            </div>
-            
-            <div class="reveal-box">
-                <h2>🔒 隱私加密</h2>
-                <p>所有 DM 對話內容經過安全處理，機器人不會儲存任何未經授權的私人數據，隱私至上。</p>
-            </div>
-
-            <div class="reveal-box">
-                <h2>🎨 完全自訂</h2>
-                <p>從機器人頭像到私訊回應文字，皆可根據你的品牌需求進行深度客製化設定。</p>
-            </div>
+        <div class="feature-card">
+            <h2>🥓 專屬福利</h2>
+            <p>加入我們，第一時間獲取培根軍團開發的各項工具使用權限與最新動態。</p>
         </div>
     </div>
 
     <footer class="footer">
-        <p style="margin-bottom: 20px; color: #555;">SUPPORT SERVER</p>
-        <a href="https://discord.gg/rvGCY3mjd" class="guild-link">JOIN DISCORD GUILD</a>
+        COPYRIGHT &copy; 2026 BACON GUILD. ALL RIGHTS RESERVED.
     </footer>
 
     <script>
-        // 滾動偵測：當方塊進入視覺範圍時加入 'active' 類別
-        function scrollReveal() {
-            const boxes = document.querySelectorAll('.reveal-box');
-            const triggerBottom = window.innerHeight * 0.8;
-
-            boxes.forEach(box => {
-                const boxTop = box.getBoundingClientRect().top;
-                if (boxTop < triggerBottom) {
-                    box.classList.add('active');
-                } else {
-                    box.classList.remove('active'); // 滾回去時可選擇是否消失
+        // 滾動浮現特效邏輯
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
             });
-        }
+        }, { threshold: 0.1 });
 
-        window.addEventListener('scroll', scrollReveal);
-        // 初始化檢查一次
-        scrollReveal();
+        document.querySelectorAll('.feature-card').forEach(card => {
+            scrollObserver.observe(card);
+        });
     </script>
 </body>
 </html>
